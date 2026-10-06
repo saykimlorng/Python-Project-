@@ -1,0 +1,18 @@
+[
+    {
+        "model": "task.category",
+        "pk": 1,
+        "fields": {
+            "name": "Office",
+            "hex_color": "#ff11aa"
+        }
+    },
+    {
+        "model": "task.category",
+        "pk": 2,
+        "fields": {
+            "name": "School",
+            "hex_color": "#009911"
+        }
+    }
+]

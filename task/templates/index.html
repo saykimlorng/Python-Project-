@@ -1,0 +1,351 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Dashboard</title>
+    {% load static %}
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100">
+
+    <div class="flex min-h-screen">
+
+        <!-- Sidebar -->
+        <aside class="w-64 bg-indigo-700 text-white">
+            <div class="p-6 text-2xl font-bold border-b border-indigo-600">
+                TaskApp
+            </div>
+
+            <nav class="mt-6">
+                <a href="{% url 'index' %}" class="block px-6 py-3 bg-indigo-800">
+                    📊 Dashboard
+                </a>
+
+                <a href="{% url 'morning' %}" class="block px-6 py-3 hover:bg-indigo-600 transition">
+                    ✅ Tasks
+                </a>
+
+                <a href="{% url 'evening' %}" class="block px-6 py-3 hover:bg-indigo-600 transition">
+                    👤 Users
+                </a>
+
+                <a href="#" class="block px-6 py-3 hover:bg-indigo-600 transition">
+                    📅 Calendar
+                </a>
+
+                <a href="#" class="block px-6 py-3 hover:bg-indigo-600 transition">
+                    ⚙ Settings
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main -->
+        <main class="flex-1">
+
+            <!-- Navbar -->
+            <header class="bg-white shadow px-8 py-5 flex justify-between items-center">
+
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-800">
+                        Dashboard
+                    </h1>
+
+                    <p class="text-gray-500">
+                        Welcome back!
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <input type="text" placeholder="Search..."
+                        class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+
+                    <img src="{% static 'profile.jpg' %}" alt="Profile"
+                        class="w-11 h-11 rounded-full object-cover border-2 border-indigo-500">
+                </div> <!-- Added this missing closing div tag -->
+
+            </header>
+
+            <div class="p-8">
+
+                <!-- Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                    <div class="bg-white rounded-xl shadow p-6">
+                        <p class="text-gray-500">
+                            Total Tasks
+                        </p>
+
+                        <h2 class="text-4xl font-bold mt-2">
+                            124
+                        </h2>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow p-6">
+                        <p class="text-gray-500">
+                            Completed
+                        </p>
+
+                        <h2 class="text-4xl font-bold text-green-600 mt-2">
+                            95
+                        </h2>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow p-6">
+                        <p class="text-gray-500">
+                            In Progress
+                        </p>
+
+                        <h2 class="text-4xl font-bold text-yellow-500 mt-2">
+                            18
+                        </h2>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow p-6">
+                        <p class="text-gray-500">
+                            Pending
+                        </p>
+
+                        <h2 class="text-4xl font-bold text-red-500 mt-2">
+                            11
+                        </h2>
+                    </div>
+
+                </div>
+
+                <!-- Recent Tasks -->
+                <div class="bg-white rounded-xl shadow mt-10">
+
+                    <div class="flex justify-between items-center p-6 border-b">
+                        <h2 class="text-xl font-bold">
+                            Recent Tasks
+                        </h2>
+
+                        <button class="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700">
+                            + Add Task
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto">
+
+                        <table class="w-full">
+
+                            <thead class="bg-gray-50">
+
+                                <tr class="text-left">
+
+                                    <th class="p-4">Task</th>
+                                    <th class="p-4">Priority</th>
+                                    <th class="p-4">Status</th>
+                                    <th class="p-4">Due Date</th>
+                                    <th class="p-4">Action</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr class="border-t hover:bg-gray-50" data-id="1">
+
+                                    <td class="p-4">
+                                        Design Homepage
+                                    </td>
+
+                                    <td class="p-4">
+                                        <span class="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm">
+                                            High
+                                        </span>
+                                    </td>
+
+                                    <td class="p-4">
+                                        <span class="status-badge bg-yellow-100 text-yellow-600 px-3 py-1 rounded-full text-sm">
+                                            In Progress
+                                        </span>
+                                    </td>
+
+                                    <td class="p-4">
+                                        Jul 12
+                                    </td>
+
+                                    <td class="p-4">
+                                        <button type="button" data-status="Completed" onclick="patchTaskRow(this)" class="bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 text-sm">
+                                            Patch
+                                        </button>
+                                    </td>
+
+                                </tr>
+
+                                <tr class="border-t hover:bg-gray-50" data-id="2">
+
+                                    <td class="p-4">
+                                        API Development
+                                    </td>
+
+                                    <td class="p-4">
+                                        <span class="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-sm">
+                                            Medium
+                                        </span>
+                                    </td>
+
+                                    <td class="p-4">
+                                        <span class="status-badge bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm">
+                                            Completed
+                                        </span>
+                                    </td>
+
+                                    <td class="p-4">
+                                        Jul 10
+                                    </td>
+
+                                    <td class="p-4">
+                                        <button type="button" data-status="Pending" onclick="patchTaskRow(this)" class="bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 text-sm">
+                                            Patch
+                                        </button>
+                                    </td>
+
+                                </tr>
+
+                                <tr class="border-t hover:bg-gray-50" data-id="3">
+
+                                    <td class="p-4">
+                                        Database Backup
+                                    </td>
+
+                                    <td class="p-4">
+                                        <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm">
+                                            Low
+                                        </span>
+                                    </td>
+
+                                    <td class="p-4">
+                                        <span class="status-badge bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm">
+                                            Pending
+                                        </span>
+                                    </td>
+
+                                    <td class="p-4">
+                                        Jul 18
+                                    </td>
+
+                                    <td class="p-4">
+                                        <button type="button" data-status="Completed" onclick="patchTaskRow(this)" class="bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 text-sm">
+                                            Patch
+                                        </button>
+                                    </td>
+
+                                </tr>
+
+                                <tr class="border-t hover:bg-gray-50" data-id="4">
+
+                                    <td class="p-4">
+                                        Testing Module
+                                    </td>
+
+                                    <td class="p-4">
+                                        <span class="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm">
+                                            High
+                                        </span>
+                                    </td>
+
+                                    <td class="p-4">
+                                        <span class="status-badge bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm">
+                                            Completed
+                                        </span>
+                                    </td>
+
+                                    <td class="p-4">
+                                        Jul 15
+                                    </td>
+
+                                    <td class="p-4">
+                                        <button type="button" data-status="In Progress" onclick="patchTaskRow(this)" class="bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 text-sm">
+                                            Patch
+                                        </button>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+<script>
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return '';
+    }
+
+    function patchTaskRow(button) {
+        const row = button.closest('tr');
+        const taskId = row.dataset.id;
+        const nextStatus = button.dataset.status || 'Completed';
+        const url = `/api/v1/orders/${taskId}/`;
+
+        fetch(url, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+                status: {
+                    'Pending': 'P',
+                    'Completed': 'C',
+                    'Cancelled': 'X'
+                }[nextStatus] || nextStatus
+            })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Patch request failed');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const badge = row.querySelector('.status-badge');
+            if (badge && data.status) {
+                const statusMap = {
+                    P: 'Pending',
+                    C: 'Completed',
+                    X: 'Cancelled'
+                };
+                const cleanStatus = statusMap[data.status] || data.status;
+                badge.textContent = cleanStatus;
+                badge.className = 'status-badge px-3 py-1 rounded-full text-sm';
+
+                if (cleanStatus === 'Completed') {
+                    badge.classList.add('bg-green-100', 'text-green-600');
+                } else if (cleanStatus === 'Pending') {
+                    badge.classList.add('bg-red-100', 'text-red-600');
+                } else {
+                    badge.classList.add('bg-yellow-100', 'text-yellow-600');
+                }
+            }
+        })
+        .catch(error => {
+            alert('Patch failed: ' + error.message);
+        });
+    }
+</script>
+
+</body>
+
+</html>
